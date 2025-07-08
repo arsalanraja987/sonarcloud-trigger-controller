@@ -1,0 +1,1 @@
+# sonarcloud-trigger-controller
