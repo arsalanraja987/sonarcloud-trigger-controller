@@ -1,0 +1,26 @@
+name: Trigger SonarCloud Scans for 3 Repos
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-sonarcloud-scans:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install GitHub CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install gh -y
+
+      - name: Authenticate gh CLI
+        run: echo "${{ secrets.GH_TOKEN }}" | gh auth login --with-token
+
+      - name: Trigger java-cve-2021-29425-tika-xxe
+        run: gh workflow run sonarcloud.yml -R arsalanraja987/java-cve-2021-29425-tika-xxe
+
+      - name: Trigger gradle-cve-2021-29427-demo
+        run: gh workflow run sonarcloud.yml -R arsalanraja987/gradle-cve-2021-29427-demo
+
+      - name: Trigger java-insecure-random-cve-2021-27568
+        run: gh workflow run sonarcloud.yml -R arsalanraja987/java-insecure-random-cve-2021-27568
