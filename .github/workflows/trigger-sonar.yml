@@ -10,17 +10,29 @@ jobs:
     steps:
       - name: Install GitHub CLI
         run: |
-          sudo apt-get update
-          sudo apt-get install gh -y
+          sudo apt update
+          sudo apt install gh -y
 
       - name: Authenticate gh CLI
-        run: echo "${{ secrets.GH_TOKEN }}" | gh auth login --with-token
+        run: echo "${{ secrets.GH_TRIGGER_PAT }}" | gh auth login --with-token
 
       - name: Trigger java-cve-2021-29425-tika-xxe
-        run: gh workflow run sonarcloud.yml -R arsalanraja987/java-cve-2021-29425-tika-xxe
+        run: |
+          gh workflow run sonar.yml \
+            --repo arsalanraja987/java-cve-2021-29425-tika-xxe \
+            --ref main
+
+      - name: Sleep between triggers
+        run: sleep 5
 
       - name: Trigger gradle-cve-2021-29427-demo
-        run: gh workflow run sonarcloud.yml -R arsalanraja987/gradle-cve-2021-29427-demo
+        run: |
+          gh workflow run sonar.yml \
+            --repo arsalanraja987/gradle-cve-2021-29427-demo \
+            --ref main
+
+      - name: Sleep between triggers
+        run: sleep 5
 
       - name: Trigger java-insecure-random-cve-2021-27568
-        run: gh workflow run sonarcloud.yml -R arsalanraja987/java-insecure-random-cve-2021-27568
+        run: |
