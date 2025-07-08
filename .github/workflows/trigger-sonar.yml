@@ -2,7 +2,7 @@ name: Trigger SonarCloud Scans for 3 Repos
 
 on:
   workflow_dispatch:
-
+ 
 jobs:
   run-sonarcloud-scans:
     runs-on: ubuntu-latest
